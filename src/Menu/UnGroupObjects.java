@@ -1,0 +1,35 @@
+package Menu;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import DrawArea.Draw;
+import DrawArea.DrawObject;
+import gui.Canvas;
+
+public class UnGroupObjects implements ActionListener{
+	Canvas canvas;
+	ArrayList<DrawObject> objects = new ArrayList<>();
+	ArrayList<Draw> drawingList = new ArrayList<>();
+	
+	public UnGroupObjects(Canvas canvas) {
+		this.canvas = canvas;
+		objects = canvas.getobjectlist();
+		drawingList = canvas.getlist();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < objects.size(); i++) {
+			if (objects.get(i).isSelected && objects.get(i).getGroupObjetcts() != null) {
+				objects.addAll(objects.get(i).getGroupObjetcts());
+				drawingList.addAll(objects.get(i).getGroupObjetcts());
+				drawingList.remove(objects.get(i));
+				objects.remove(objects.get(i));
+			}
+		}
+		canvas.repaint();
+	}
+}
