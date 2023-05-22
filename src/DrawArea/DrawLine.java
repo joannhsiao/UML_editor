@@ -14,6 +14,8 @@ public class DrawLine extends Draw{
 		dstx = end.getX();
 		dsty = end.getY();
 	}
+	
+	@Override
 	public void draw(Graphics g) {
 		super.draw(g);
 		startx = start.getX();

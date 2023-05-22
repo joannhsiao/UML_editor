@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import Menu.ChangeName;
 import Menu.GroupObjects;
@@ -15,6 +16,7 @@ import javax.swing.JMenuItem;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import MouseControl.Select;
 public class MainWindow {
 	Canvas canvas;
 	private ArrayList<JButton> buttons;
+	private static Dimension buttonSize = new Dimension(50, 50);
+	private static int boundDistance = 10;
 	
 	public static void main(String args[]) {
 		new MainWindow();
@@ -65,9 +69,11 @@ public class MainWindow {
 		JPanel panelbar = new JPanel();
 		frame.getContentPane().add(panelbar, BorderLayout.WEST);
 	    panelbar.setLayout(new GridLayout(6, 1, 40, 40));
+	    panelbar.setBorder(new LineBorder(Color.BLACK));
 		
 	    for (int i = 0; i < ButtonBar.values().length; i++) {
-	    	JButton button = new JButton(ButtonBar.values()[i].getname(), new ImageIcon(ButtonBar.values()[i].getimg()));
+//	    	JButton button = new JButton(ButtonBar.values()[i].getname(), new ImageIcon(ButtonBar.values()[i].getimg()));
+	    	JButton button = new JButton(new ImageIcon(ButtonBar.values()[i].getimg()));
 	    	button.setBackground(Color.white);
 	    	panelbar.add(button);
 	    	buttons.add(button);

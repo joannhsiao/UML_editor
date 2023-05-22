@@ -36,10 +36,6 @@ public class DrawObject extends Draw{
 		}
 	}
 	
-	public void changeName(String NewName) {
-		this.name = NewName;
-	}
-	
 	@Override
 	public void draw(Graphics g) {
 		super.draw(g);
@@ -109,5 +105,9 @@ public class DrawObject extends Draw{
 	
 	public ArrayList<DrawObject> getGroupObjetcts(){ 
 		return null; 
+	}
+	
+	public void changeName(String NewName) {
+		this.name = NewName;
 	}
 }
