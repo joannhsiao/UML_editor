@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import DrawArea.DrawCase;
 import DrawArea.DrawClass;
+import DrawArea.DrawObject;
 import gui.Canvas;
 
 public class CreateObject extends MouseAdapter{
@@ -19,16 +20,15 @@ public class CreateObject extends MouseAdapter{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		DrawObject object;
 		if (type == "Class") {
-			DrawClass drawClass = new DrawClass(e.getX(), e.getY(), 150, 150);
-			canvas.append(drawClass);
-			canvas.appendObject(drawClass);
+			object = new DrawClass(e.getX(), e.getY(), 150, 150);
 		}
 		else {
-			DrawCase drawCase = new DrawCase(e.getX(), e.getY(), 150, 100);
-			canvas.append(drawCase);
-			canvas.appendObject(drawCase);
+			object = new DrawCase(e.getX(), e.getY(), 150, 100);
 		}
+		canvas.append(object);
+		canvas.appendObject(object);
 		canvas.repaint();
 	}
 	

@@ -8,6 +8,7 @@ import DrawArea.ConnectPorts;
 import DrawArea.DrawAssociationLine;
 import DrawArea.DrawCompositionLine;
 import DrawArea.DrawGeneralizationLine;
+import DrawArea.DrawLine;
 import DrawArea.DrawObject;
 import gui.Canvas;
 
@@ -52,15 +53,17 @@ public class CreateLine extends MouseAdapter{
 	}
 
 	public void DecideLine() {
+		DrawLine line;
 		if (type == "Association Line") {
-			canvas.append(new DrawAssociationLine(start, end));
+			line = new DrawAssociationLine(start, end);
 		}
 		else if (type == "Generalization Line") {
-			canvas.append(new DrawGeneralizationLine(start, end));
+			line = new DrawGeneralizationLine(start, end);
 		}
 		else {
-			canvas.append(new DrawCompositionLine(start, end));
-		}		
+			line = new DrawCompositionLine(start, end);
+		}
+		canvas.append(line);
 		canvas.repaint();
 	}
 	

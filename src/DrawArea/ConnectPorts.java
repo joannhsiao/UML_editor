@@ -4,10 +4,6 @@ import java.awt.Graphics;
 
 public class ConnectPorts {
 	private int x, y, PortSize = 10;
-	
-	public ConnectPorts() {
-		super();
-	}
 
 	public ConnectPorts(int x, int y) {
 		this.x = x;
