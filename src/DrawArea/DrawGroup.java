@@ -1,6 +1,7 @@
 package DrawArea;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -9,27 +10,29 @@ public class DrawGroup extends DrawObject{
 	
 	public DrawGroup(int x, int y, int width, int height, ArrayList<DrawObject> grouplist) {
 		super(x, y, width, height);
-		
 		this.groupObjects = grouplist;
-		for (DrawObject object: grouplist) {
+		SetGroup();
+	}
+	
+	public void SetGroup() {
+		for (DrawObject object: groupObjects) {
 			Rectangle rect = object.rectangle;
 			rectangle = rectangle.union(rect);
 		}
 		this.width = rectangle.width;
 		this.height = rectangle.height;
-		this.x = rectangle.x;
-		this.y = rectangle.y;
+		point = new Point(rectangle.x, rectangle.y);
 		updatePorts();
 	}
 	
 	@Override
 	public void update(int x, int y) {
 		// TODO Auto-generated method stub
-		int dstx = x - this.x;
-		int dsty = y - this.y;
+		int dstx = x - point.x;
+		int dsty = y - point.y;
 		super.update(x, y);
 		for(DrawObject object: groupObjects) {
-			object.update(dstx+object.x, dsty+object.y);
+			object.update(dstx+object.point.x, dsty+object.point.y);
 			object.updatePorts();
 		}
 	}
@@ -41,7 +44,7 @@ public class DrawGroup extends DrawObject{
 			groupObjects.get(i).draw(g);
 		}
 		if (isSelected) {
-		    g.drawRect(x, y, width, height);
+		    g.drawRect(point.x, point.y, width, height);
 		}
 	}
 	

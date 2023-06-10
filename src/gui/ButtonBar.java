@@ -1,24 +1,31 @@
 package gui;
 
+import MouseControl.Select;
+import MouseControl.CreateLine;
+import MouseControl.CreateObject;
+import MouseControl.Mode;
+
 public enum ButtonBar {
-	Select("Select", ".\\img\\Select.png"), 
-	Association("Association Line", ".\\img\\Association.png"), 
-	Generalization("Generalization Line", ".\\img\\Generalization.png"), 
-	Composition("Composition Line", ".\\img\\Composition.png"), 
-	Class("Class", ".\\img\\Class.png"), 
-	Usecase("Use Case", ".\\img\\UseCase.png");
+	Select(new Select(), ".\\img\\Select.png"), 
+	Association(new CreateLine("Association Line"), ".\\img\\Association.png"), 
+	Generalization(new CreateLine("Generalization Line"), ".\\img\\Generalization.png"), 
+	Composition(new CreateLine("Composition Line"), ".\\img\\Composition.png"), 
+	Class(new CreateObject("Class"), ".\\img\\Class.png"), 
+	Usecase(new CreateObject("Use Case"), ".\\img\\UseCase.png");
 	
-	private String name;
+	private Mode mode;
 	private String imgpath;
 
-	ButtonBar(String name, String imgpath){
-		this.name = name;
+	ButtonBar(Mode mode, String imgpath){
+		this.mode = mode;
 		this.imgpath = imgpath;
 	}
-	public String getname() {
-		return name;
+	
+	public Mode getMode() {
+		return mode;
 	}
-	public String getimg() {
+
+	public String getImg() {
 		return imgpath;
 	}
 }

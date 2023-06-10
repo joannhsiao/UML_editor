@@ -6,11 +6,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import DrawArea.Draw;
-import DrawArea.DrawObject;
+import tools.singleton;
 
 public class Canvas extends JPanel{
-	private ArrayList<Draw> drawingList = new ArrayList<>();
-	private ArrayList<DrawObject> objects = new ArrayList<>();
+	private ArrayList<Draw> drawingList;
 	
 	public Canvas() { 
 		setBackground(Color.white);
@@ -19,24 +18,10 @@ public class Canvas extends JPanel{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		drawingList = singleton.getDrawingList();
+		singleton.SortDrawingList();
 		for (int i = 0; i < drawingList.size(); i++) {
 			drawingList.get(i).draw(g);
 		}
-	}
-	
-	public void append(Draw draw) {
-		drawingList.add(draw);
-	}
-	
-	public void appendObject(DrawObject object) {
-		objects.add(object);
-	}
-	
-	public ArrayList<DrawObject> getobjectlist() {
-		return objects;
-	}
-	
-	public ArrayList<Draw> getlist() {
-		return drawingList;
 	}
 }

@@ -1,26 +1,23 @@
 package DrawArea;
 
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class DrawLine extends Draw{
-	ConnectPorts start, end;
-	protected int startx, starty, dstx, dsty;
+	protected ConnectPorts start, end;
+	protected Point begin, destination;
 	
 	public DrawLine(ConnectPorts start, ConnectPorts end) {
 		this.start = start;
 		this.end = end;
-		startx = start.getX();
-		starty = start.getY();
-		dstx = end.getX();
-		dsty = end.getY();
+		begin = new Point(start.getX(), start.getY());
+		destination = new Point(end.getX(), end.getY());
 	}
 	
 	@Override
 	public void draw(Graphics g) {
-		super.draw(g);
-		startx = start.getX();
-		starty = start.getY();
-		dstx = end.getX();
-		dsty = end.getY();
+		begin = new Point(start.getX(), start.getY());
+		destination = new Point(end.getX(), end.getY());
+		g.drawLine(begin.x, begin.y, destination.x, destination.y);
 	}
 }

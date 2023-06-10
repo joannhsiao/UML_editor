@@ -1,23 +1,21 @@
 package MouseControl;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
-import gui.Canvas;
-
 public class SingleSelect extends Select{
-	protected int selectx, selecty;
+	protected Point select;
 	protected Rectangle rect;
 	
-	public SingleSelect(Canvas canvas) {
-		super(canvas);
+	public SingleSelect() {
+		super();
 	}
 	
 	@Override
 	public void performPressed(MouseEvent e) {
-		clearSelected();
-		this.selectx = e.getX();
-		this.selecty = e.getY();
+		model.clearSelected();
+		select = new Point(e.getX(), e.getY());
 		drawSelect();
 	}
 	
@@ -25,7 +23,7 @@ public class SingleSelect extends Select{
 	public void drawSelect() {
 		for (int i = objects.size()-1; i >= 0; i--) {
 			rect = objects.get(i).rectangle;
-			if (rect.contains(selectx, selecty)) {
+			if (rect.contains(select.x, select.y)) {
 				objects.get(i).updatePorts();
 				objects.get(i).setSelect(true);
 				break;

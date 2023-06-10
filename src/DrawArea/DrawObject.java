@@ -1,12 +1,14 @@
  package DrawArea;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class DrawObject extends Draw{
-	protected int x, y, width, height;
+	protected int width, height;
+	protected Point point;
 	protected Polygon ranges[];
 	protected ConnectPorts ports[];
 	public boolean isSelected = false;
@@ -16,66 +18,60 @@ public class DrawObject extends Draw{
 	public DrawObject(int x, int y, int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.x = x;
-		this.y = y;
+		point = new Point(x, y);
 		rectangle.setBounds(x, y, width, height);
-		/* initialize connect ports */
-		for (int i = 0; i < 4; i++) {
-			ports = new ConnectPorts[] {
-					new ConnectPorts(x+width/2, y),
-					new ConnectPorts(x, y+height/2),
-					new ConnectPorts(x+width/2, y+height),
-					new ConnectPorts(x+width, y+height/2)
-			};
-			ranges = new Polygon[] {
-					new Polygon(new int[] {x, x+width, x+width/2}, new int[] {y, y, y+height/2}, 3), 
-					new Polygon(new int[] {x, x, x+width/2}, new int[] {y, y+height, y+height/2}, 3), 
-					new Polygon(new int[] {x, x+width, x+width/2}, new int[] {y+height, y+height, y+height/2}, 3),
-					new Polygon(new int[] {x+width, x+width, x+width/2}, new int[] {y+height, y, y+height/2}, 3)
-			};
-		}
+		SetPorts();
 	}
 	
 	@Override
 	public void draw(Graphics g) {
-		super.draw(g);
 		if (this.isSelected) {
 			drawPorts(g);
 		}
 	}
 	
 	public int getx() {
-		return this.x;
+		return point.x;
 	}
 	
 	public int gety() {
-		return this.y;
-	}
-	
-	public int getwidth() {
-		return this.width;
-	}
-	public int getheight() {
-		return this.height;
+		return point.y;
 	}
 	
 	public void update(int x, int y) {
-		this.x = x;
-		this.y = y;
+		point = new Point(x, y);
 		rectangle.setBounds(x, y, width, height);
 	}
 	
+	public void SetPorts() {
+		/* initialize connect ports */
+		for (int i = 0; i < 4; i++) {
+			ports = new ConnectPorts[] {
+					new ConnectPorts(point.x+width/2, point.y),
+					new ConnectPorts(point.x, point.y+height/2),
+					new ConnectPorts(point.x+width/2, point.y+height),
+					new ConnectPorts(point.x+width, point.y+height/2)
+			};
+			ranges = new Polygon[] {
+					new Polygon(new int[] {point.x, point.x+width, point.x+width/2}, new int[] {point.y, point.y, point.y+height/2}, 3), 
+					new Polygon(new int[] {point.x, point.x, point.x+width/2}, new int[] {point.y, point.y+height, point.y+height/2}, 3), 
+					new Polygon(new int[] {point.x, point.x+width, point.x+width/2}, new int[] {point.y+height, point.y+height, point.y+height/2}, 3),
+					new Polygon(new int[] {point.x+width, point.x+width, point.x+width/2}, new int[] {point.y+height, point.y, point.y+height/2}, 3)
+			};
+		}
+	}
+	
 	public void updatePorts() {
-		ports[0].update(x+width/2, y);
-		ports[1].update(x, y+height/2);
-		ports[2].update(x+width/2, y+height);
-		ports[3].update(x+width, y+height/2);
+		ports[0].update(point.x+width/2, point.y);
+		ports[1].update(point.x, point.y+height/2);
+		ports[2].update(point.x+width/2, point.y+height);
+		ports[3].update(point.x+width, point.y+height/2);
 		
 		ranges = new Polygon[] {
-				new Polygon(new int[] {x, x+width, x+width/2}, new int[] {y, y, y+height/2}, 3), 
-				new Polygon(new int[] {x, x, x+width/2}, new int[] {y, y+height, y+height/2}, 3), 
-				new Polygon(new int[] {x, x+width, x+width/2}, new int[] {y+height, y+height, y+height/2}, 3),
-				new Polygon(new int[] {x+width, x+width, x+width/2}, new int[] {y+height, y, y+height/2}, 3)
+				new Polygon(new int[] {point.x, point.x+width, point.x+width/2}, new int[] {point.y, point.y, point.y+height/2}, 3), 
+				new Polygon(new int[] {point.x, point.x, point.x+width/2}, new int[] {point.y, point.y+height, point.y+height/2}, 3), 
+				new Polygon(new int[] {point.x, point.x+width, point.x+width/2}, new int[] {point.y+height, point.y+height, point.y+height/2}, 3),
+				new Polygon(new int[] {point.x+width, point.x+width, point.x+width/2}, new int[] {point.y+height, point.y, point.y+height/2}, 3)
 		};
 	}
 	

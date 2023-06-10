@@ -16,12 +16,12 @@ public class DrawCase extends DrawObject{
 	public void draw(Graphics g) {
 		super.draw(g);
 		g.setColor(Color.white);
-		g.fillOval(x, y, width, height);
+		g.fillOval(point.x, point.y, width, height);
 		g.setColor(Color.black);
-		g.drawOval(x, y, width, height);
+		g.drawOval(point.x, point.y, width, height);
 		FontMetrics fm = g.getFontMetrics();
         double textWidth = fm.getStringBounds(name, g).getWidth();
         g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-		g.drawString(name, (int)(x+width/2-textWidth/2), y+height/2);
+		g.drawString(name, (int)(point.x+width/2-textWidth/2), point.y+height/2);
 	}
 }

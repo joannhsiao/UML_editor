@@ -8,16 +8,17 @@ import DrawArea.Draw;
 import DrawArea.DrawGroup;
 import DrawArea.DrawObject;
 import gui.Canvas;
+import tools.singleton;
 
 public class GroupObjects implements ActionListener{
-	Canvas canvas;
-	ArrayList<DrawObject> objects = new ArrayList<>();
-	ArrayList<Draw> drawingList = new ArrayList<>();
+	private Canvas canvas;
+	private ArrayList<DrawObject> objects = new ArrayList<>();
+	private ArrayList<Draw> drawingList = new ArrayList<>();
 	
 	public GroupObjects(Canvas canvas) {
 		this.canvas = canvas;
-		objects = canvas.getobjectlist();
-		drawingList = canvas.getlist();
+		objects = singleton.getObjectList();
+		drawingList = singleton.getDrawingList();
 	}
  
 	@Override

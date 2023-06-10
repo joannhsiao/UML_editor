@@ -1,38 +1,35 @@
 package MouseControl;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import DrawArea.DrawObject;
-import gui.Canvas;
 
 public class Move extends Select{
-	protected int selectx, selecty, dstx, dsty;
+	protected Point select, destination;
 	
-	public Move(Canvas canvas) {
-		super(canvas);
+	public Move() {
+		super();
 	}
 	
 	@Override
 	public void performPressed(MouseEvent e) {
-		this.selectx = e.getX();
-		this.selecty = e.getY();
+		select = new Point(e.getX(), e.getY());
 	}
 
 	@Override
 	public void performDragged(MouseEvent e) {
 		for (DrawObject object: objects) {
 			if (object.isSelected) {
-				this.dstx = object.getx() - selectx;
-				this.dsty = object.gety() - selecty;
-				object.update(dstx + e.getX(), dsty + e.getY());
+				destination = new Point(object.getx() - select.x, object.gety() - select.y);
+				object.update(destination.x + e.getX(), destination.y + e.getY());
 			}
 		}
-		this.selectx = e.getX();
-		this.selecty = e.getY();
+		select = new Point(e.getX(), e.getY());
 	}
 	
 	@Override
 	public void performReleased(MouseEvent e) {
-		clearSelected();
+		model.clearSelected();
 	}
 }

@@ -16,20 +16,16 @@ import javax.swing.JMenuItem;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import MouseControl.CreateLine;
-import MouseControl.CreateObject;
-import MouseControl.Select;
+import MouseControl.Mode;
 
 public class MainWindow {
 	Canvas canvas;
 	private ArrayList<JButton> buttons;
-	private static Dimension buttonSize = new Dimension(50, 50);
-	private static int boundDistance = 10;
+	private Mode mode;
 	
 	public static void main(String args[]) {
 		new MainWindow();
@@ -68,12 +64,11 @@ public class MainWindow {
 	    buttons = new ArrayList<JButton>();	// used to collect the buttons list
 		JPanel panelbar = new JPanel();
 		frame.getContentPane().add(panelbar, BorderLayout.WEST);
-	    panelbar.setLayout(new GridLayout(6, 1, 40, 40));
+	    panelbar.setLayout(new GridLayout(6, 1, 8, 8));
 	    panelbar.setBorder(new LineBorder(Color.BLACK));
 		
 	    for (int i = 0; i < ButtonBar.values().length; i++) {
-//	    	JButton button = new JButton(ButtonBar.values()[i].getname(), new ImageIcon(ButtonBar.values()[i].getimg()));
-	    	JButton button = new JButton(new ImageIcon(ButtonBar.values()[i].getimg()));
+	    	JButton button = new JButton(new ImageIcon(ButtonBar.values()[i].getImg()));
 	    	button.setBackground(Color.white);
 	    	panelbar.add(button);
 	    	buttons.add(button);
@@ -81,7 +76,7 @@ public class MainWindow {
 		    	public void actionPerformed(ActionEvent e){
 		    		DrawingMode(((JButton) e.getSource()));
 		    	}
-	    	});  
+	    	});
 	    }
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,29 +97,12 @@ public class MainWindow {
 		}
 		b.setBackground(Color.lightGray);
 		
-		switch (ButtonBar.values()[buttons.indexOf(b)].getname()) {
-		case "Select":
-			Select select = new Select(canvas);
-			canvas.addMouseListener(select);
-			canvas.addMouseMotionListener(select);
-			break;
-		case "Association Line":
-			canvas.addMouseListener(new CreateLine(canvas, "Association Line"));
-			break;
-		case "Generalization Line":
-			canvas.addMouseListener(new CreateLine(canvas, "Generalization Line"));
-			break;
-		case "Composition Line":
-			canvas.addMouseListener(new CreateLine(canvas, "Composition Line"));
-			break;
-		case "Class": 
-			canvas.addMouseListener(new CreateObject(canvas, "Class"));
-			break;
-		case "Use Case":
-			canvas.addMouseListener(new CreateObject(canvas, "Case"));
-			break;
-		default:
-			break;
+		mode = ButtonBar.values()[buttons.indexOf(b)].getMode();
+		mode.setCanvas(canvas);
+		
+		if (buttons.indexOf(b) == 0) {
+			canvas.addMouseMotionListener(mode);
 		}
+		canvas.addMouseListener(mode);
 	}
 }

@@ -1,29 +1,29 @@
 package DrawArea;
 
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class ConnectPorts {
-	private int x, y, PortSize = 10;
+	private int PortSize = 10;
+	private Point connectPoint;
 
 	public ConnectPorts(int x, int y) {
-		this.x = x;
-		this.y = y;
+		connectPoint = new Point(x, y);
 	}
 	
 	public void draw(Graphics g) {
-		g.fillRect(x-PortSize/2, y-PortSize/2, PortSize, PortSize);
+		g.fillRect(connectPoint.x-PortSize/2, connectPoint.y-PortSize/2, PortSize, PortSize);
 	}
 	
 	public int getX() {
-		return this.x;
+		return connectPoint.x;
 	}
 	
 	public int getY() {
-		return this.y;
+		return connectPoint.y;
 	}
 	
 	public void update(int x, int y) {
-		this.x = x;
-		this.y = y;
+		connectPoint = new Point(x, y);
 	}
 }

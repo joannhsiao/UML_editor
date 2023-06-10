@@ -1,53 +1,49 @@
 package MouseControl;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import DrawArea.DrawObject;
-import gui.Canvas;
 
 public class MultiSelect extends Select {
-	protected ArrayList<DrawObject> selectedobjetcs = new ArrayList<>();
-	protected Rectangle rect;
+	protected ArrayList<DrawObject> selectedobjects = new ArrayList<>();
 	public Rectangle selectRectangle;
-	protected int startx, starty, endx, endy;
+	protected Point start, end;
 	protected boolean DrawRect = false;
 	
-	public MultiSelect(Canvas canvas) {
-		super(canvas);
+	public MultiSelect() {
+		super();
 	}
 	
 	@Override
 	public void performPressed(MouseEvent e) {
-		clearSelected();
-		selectedobjetcs.clear();
-		this.startx = e.getX();
-		this.starty = e.getY();
+		model.clearSelected();
+		selectedobjects.clear();
+		start = new Point(e.getX(), e.getY());
 		selectRectangle = new Rectangle();
-		
 	}
 	
 	@Override
 	public void performReleased(MouseEvent e) {
-		clearSelected();
-		this.endx = e.getX();
-		this.endy = e.getY();
-		if (!selectedobjetcs.isEmpty()) {
-			selectRectangle.setBounds(startx, starty, Math.abs(endx-startx), Math.abs(endy-starty));
+		model.clearSelected();
+		end = new Point(e.getX(), e.getY());
+		if (!selectedobjects.isEmpty()) {
+			model.setSelectRectangle(selectRectangle, start, end);
 		}
 		drawSelect();
 	}
 	
 	@Override
 	public void performDragged(MouseEvent e) {
-		selectRectangle = new Rectangle(startx, starty, Math.abs(e.getX()-startx), Math.abs(e.getY()-starty));
+		model.setSelectRectangle(selectRectangle, start, e.getPoint());
 		findobjects(selectRectangle);
 	}
 	
 	@Override
 	public void drawSelect() {
-		for (DrawObject object: selectedobjetcs) {
+		for (DrawObject object: selectedobjects) {
 			object.updatePorts();
 			object.setSelect(true);
 		}
@@ -55,9 +51,8 @@ public class MultiSelect extends Select {
 	
 	public void findobjects(Rectangle rectangle) {
 		for (DrawObject object: objects) {
-			rect = object.rectangle;
-			if (rectangle.intersects(rect)) {
-				selectedobjetcs.add(object);
+			if (rectangle.intersects(object.rectangle)) {
+				selectedobjects.add(object);
 			}
 		}
 	}
