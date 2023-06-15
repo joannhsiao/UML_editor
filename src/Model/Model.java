@@ -13,7 +13,6 @@ import MouseControl.Move;
 import MouseControl.MultiSelect;
 import MouseControl.Select;
 import MouseControl.SingleSelect;
-import tools.factory;
 import tools.singleton;
 
 public class Model {
@@ -28,7 +27,7 @@ public class Model {
 	}
 	
 	public void CreateObject(String type, Point point) {
-		DrawObject object = factory.GetObject(type, point.x, point.y);
+		DrawObject object = singleton.GetObject(type, point.x, point.y);
 		if (object != null) {
 			objectlist.add(object);
 			drawingList.add(object);
@@ -38,7 +37,7 @@ public class Model {
 	}
 	
 	public void CreateLine(String type, ConnectPorts start, ConnectPorts end) {
-		DrawLine line = factory.GetLine(type, start, end);
+		DrawLine line = singleton.GetLine(type, start, end);
 		if (line != null) {
 			drawingList.add(line);
 			line.setDepth(singleton.getNowDepth());
@@ -51,7 +50,7 @@ public class Model {
 			object.setSelect(false);
 		}
 	}
-	// ToDo: when to call it
+
 	public void SortDrawingList() {
 		drawingList.sort(sortingComparator);
 		objectlist.sort(sortingComparator);
